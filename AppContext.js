@@ -21,8 +21,10 @@ export const AppProvider = ({ children }) => {
   const addActivity = (newActivity) =>
     setActivities([...activities, newActivity]);
 
+  const addDiet = (newDietEntry) => setDiet([...diet, newDietEntry]);
+
   return (
-    <AppContext.Provider value={{ activities, diet, addActivity }}>
+    <AppContext.Provider value={{ activities, diet, addActivity, addDiet }}>
       {children}
     </AppContext.Provider>
   );

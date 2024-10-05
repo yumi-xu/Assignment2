@@ -9,6 +9,7 @@ import Activities from "./Screens/Activities";
 import Diet from "./Screens/Diet";
 import { AppProvider } from "./AppContext";
 import AddActivity from "./Screens/AddActivity";
+import AddDietEntry from "./Screens/AddDietEntry";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ export default function App() {
             )}
           </Stack.Screen>
           <Stack.Screen name="AddActivity" component={AddActivity} />
+          <Stack.Screen name="AddDietEntry" component={AddDietEntry} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
