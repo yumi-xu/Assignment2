@@ -18,13 +18,21 @@ export const AppProvider = ({ children }) => {
     { type: "Lunch", date: "Wed Sep 25 2024", calories: "900", warning: true },
   ]);
 
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   const addActivity = (newActivity) =>
     setActivities([...activities, newActivity]);
 
   const addDiet = (newDietEntry) => setDiet([...diet, newDietEntry]);
 
   return (
-    <AppContext.Provider value={{ activities, diet, addActivity, addDiet }}>
+    <AppContext.Provider
+      value={{ activities, diet, theme, addActivity, addDiet, toggleTheme }}
+    >
       {children}
     </AppContext.Provider>
   );
