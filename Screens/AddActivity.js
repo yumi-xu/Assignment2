@@ -1,13 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
+import { View, Text, TextInput, Button, Alert } from "react-native";
 import { AppContext } from "../AppContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -66,7 +58,7 @@ const AddActivity = ({ navigation }) => {
 
       <Text>Duration (min):</Text>
       <TextInput
-        style={{ borderBottomWidth: 1, marginBottom: 10 }}
+        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
         placeholder="Enter duration in minutes"
         value={duration}
         onChangeText={setDuration}
@@ -74,12 +66,16 @@ const AddActivity = ({ navigation }) => {
       />
 
       <Text>Select Date:</Text>
-      <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
-        style={{ borderBottomWidth: 1, padding: 10, marginBottom: 10 }}
-      >
-        <Text>{date ? date.toDateString() : ""}</Text>
-      </TouchableOpacity>
+      <TextInput
+        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
+        value={date ? date.toDateString() : ""}
+        onPress={() => {
+          if (!date) {
+            setDate(new Date());
+          }
+          setShowDatePicker((show) => !show);
+        }}
+      />
       {showDatePicker && (
         <DateTimePicker
           value={date || new Date()}

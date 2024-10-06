@@ -25,9 +25,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const addActivity = (newActivity) =>
-    setActivities([...activities, newActivity]);
+    setActivities((activities) => [...activities, newActivity]);
 
-  const addDiet = (newDietEntry) => setDiet([...diet, newDietEntry]);
+  const addDiet = (newDietEntry) => setDiet((diet) => [...diet, newDietEntry]);
 
   return (
     <AppContext.Provider
