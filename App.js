@@ -33,15 +33,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Tabs"
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#E6E6FA",
-            },
-            headerTintColor: "#333",
-          }}
-        >
+        <Stack.Navigator initialRouteName="Tabs">
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => (
               <Tab.Navigator
@@ -59,23 +51,72 @@ export default function App() {
                       <Ionicons name={iconName} size={size} color={color} />
                     );
                   },
+                  tabBarStyle: {
+                    backgroundColor: "red", // 设置底部 Tab 的背景色
+                    borderTopWidth: 0, // 去掉 Tab 栏的顶部边框
+                  },
+                  tabBarLabelStyle: {
+                    color: "#333", // 设置 Tab 标签的颜色
+                  },
                 })}
               >
-                <Tab.Screen name="Activities" component={Activities} />
-                <Tab.Screen name="Diet" component={Diet} />
-                <Tab.Screen name="Settings" component={SettingsScreen} />
+                <Tab.Screen
+                  name="Activities"
+                  component={Activities}
+                  options={{
+                    title: "Activities",
+                    headerStyle: {
+                      backgroundColor: "red",
+                    },
+                    headerTintColor: "#333",
+                  }}
+                />
+                <Tab.Screen
+                  name="Diet"
+                  component={Diet}
+                  options={{
+                    title: "Diet",
+                    headerStyle: {
+                      backgroundColor: "red",
+                    },
+                    headerTintColor: "#333",
+                  }}
+                />
+                <Tab.Screen
+                  name="Settings"
+                  component={SettingsScreen}
+                  options={{
+                    title: "Settings",
+                    headerStyle: {
+                      backgroundColor: "red",
+                    },
+                    headerTintColor: "#333",
+                  }}
+                />
               </Tab.Navigator>
             )}
           </Stack.Screen>
           <Stack.Screen
             name="AddActivity"
             component={AddActivity}
-            options={{ title: "Add" }}
+            options={{
+              title: "Add",
+              headerStyle: {
+                backgroundColor: "#E6E6FA",
+              },
+              headerTintColor: "#333",
+            }}
           />
           <Stack.Screen
             name="AddDietEntry"
             component={AddDietEntry}
-            options={{ title: "Add" }}
+            options={{
+              title: "Add",
+              headerStyle: {
+                backgroundColor: "#E6E6FA",
+              },
+              headerTintColor: "#333",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
