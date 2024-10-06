@@ -1,15 +1,24 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { AppContext } from "../AppContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const AddActivity = ({ navigation }) => {
   const { addActivity } = useContext(AppContext);
-  const [activityType, setActivityType] = useState(null);
+  const [activityType, setActivityType] = useState("");
   const [duration, setDuration] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleSave = () => {
     if (!activityType || !duration || isNaN(duration)) {
@@ -65,12 +74,23 @@ const AddActivity = ({ navigation }) => {
       />
 
       <Text>Select Date:</Text>
-      <DateTimePicker
-        value={date}
-        mode="date"
-        display="inline"
-        onChange={(event, selectedDate) => setDate(selectedDate || date)}
-      />
+      <TouchableOpacity
+        onPress={() => setShowDatePicker(true)}
+        style={{ borderBottomWidth: 1, padding: 10, marginBottom: 10 }}
+      >
+        <Text>{date ? date.toDateString() : ""}</Text>
+      </TouchableOpacity>
+      {showDatePicker && (
+        <DateTimePicker
+          value={date || new Date()}
+          mode="date"
+          display="inline"
+          onChange={(event, selectedDate) => {
+            setShowDatePicker(false);
+            setDate(selectedDate || date);
+          }}
+        />
+      )}
 
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={() => navigation.goBack()} />
