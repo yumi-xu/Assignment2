@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
 import { AppContext } from "../AppContext";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateInput from "../Components/DateInput";
 
 const AddDietEntry = ({ navigation }) => {
   const { addDiet } = useContext(AppContext);
   const [description, setDescription] = useState("");
   const [calories, setCalories] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
 
   const handleSave = () => {
     // Validate entries
@@ -57,12 +57,7 @@ const AddDietEntry = ({ navigation }) => {
       />
 
       <Text>Select Date:</Text>
-      <DateTimePicker
-        value={date}
-        mode="date"
-        display="inline"
-        onChange={(event, selectedDate) => setDate(selectedDate || date)}
-      />
+      <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={() => navigation.goBack()} />
