@@ -13,9 +13,9 @@ const ItemsList = ({ items, displayValue }) => {
       renderItem={({ item }) => (
         <View style={[styles.itemContainer, themeStyles.itemBg]}>
           <Text style={[styles.title, themeStyles.textColor]}>{item.type}</Text>
+          {item.warning && <Text style={styles.warning}>⚠️</Text>}
           <Text style={themeStyles.textColor}>{item.date}</Text>
           <Text style={themeStyles.textColor}>{displayValue(item)}</Text>
-          {item.warning && <Text style={styles.warning}>⚠️</Text>}
         </View>
       )}
     />
