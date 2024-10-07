@@ -1,44 +1,20 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { AppContext } from "../AppContext";
+import { colors } from "../helper";
 
 const ItemsList = ({ items, displayValue }) => {
   const { theme } = useContext(AppContext);
+  const themeStyles = theme === "light" ? lightStyles : darkStyles;
   return (
     <FlatList
       data={items}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => (
-        <View
-          style={[
-            styles.itemContainer,
-            { backgroundColor: theme === "light" ? "#5D5DFF" : "#444" },
-          ]}
-        >
-          <Text
-            style={[
-              styles.title,
-              { color: theme === "light" ? "white" : "#ccc" },
-            ]}
-          >
-            {item.type}
-          </Text>
-          <Text
-            style={[
-              styles.date,
-              { color: theme === "light" ? "white" : "#ccc" },
-            ]}
-          >
-            {item.date}
-          </Text>
-          <Text
-            style={[
-              styles.value,
-              { color: theme === "light" ? "white" : "#ccc" },
-            ]}
-          >
-            {displayValue(item)}
-          </Text>
+        <View style={[styles.itemContainer, themeStyles.itemBg]}>
+          <Text style={[styles.title, themeStyles.textColor]}>{item.type}</Text>
+          <Text style={themeStyles.textColor}>{item.date}</Text>
+          <Text style={themeStyles.textColor}>{displayValue(item)}</Text>
           {item.warning && <Text style={styles.warning}>⚠️</Text>}
         </View>
       )}
@@ -52,22 +28,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 15,
     marginVertical: 5,
-    backgroundColor: "#5D5DFF",
     borderRadius: 5,
   },
   title: {
-    color: "white",
     fontWeight: "bold",
   },
-  date: {
-    color: "white",
-  },
-  value: {
-    color: "white",
-  },
-  warning: {
-    color: "yellow",
-  },
+});
+
+const lightStyles = StyleSheet.create({
+  itemBg: { backgroundColor: colors.itemListBackgroundLightColor },
+  textColor: { color: colors.itemListTextLightColor },
+});
+
+const darkStyles = StyleSheet.create({
+  itemBg: { backgroundColor: colors.itemListBackgroundDarkColor },
+  textColor: { color: colors.itemListTextDarkColor },
 });
 
 export default ItemsList;

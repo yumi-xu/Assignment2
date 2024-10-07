@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextInput } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
+import { AppContext } from "../AppContext";
 
 const DateInput = ({ date, onDateChange }) => {
+  const { theme } = useContext(AppContext);
+  const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
+
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handlePress = () => {
@@ -20,7 +25,7 @@ const DateInput = ({ date, onDateChange }) => {
   return (
     <>
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
+        style={[commonStyles.input, themeStyles.input]}
         value={date ? date.toDateString() : ""}
         onPress={handlePress}
       />

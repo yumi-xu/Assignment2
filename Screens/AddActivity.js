@@ -1,15 +1,18 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { Text, TextInput, Button, Alert } from "react-native";
 import { AppContext } from "../AppContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateInput from "../Components/DateInput";
+import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
+import Container from "../Components/Container";
 
 const AddActivity = ({ navigation }) => {
-  const { addActivity } = useContext(AppContext);
+  const { addActivity, theme } = useContext(AppContext);
   const [activityType, setActivityType] = useState("");
   const [duration, setDuration] = useState("");
   const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
+  const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
 
   const handleSave = () => {
     if (!activityType || !duration || isNaN(duration)) {
@@ -36,8 +39,8 @@ const AddActivity = ({ navigation }) => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Select an Activity Type:</Text>
+    <Container>
+      <Text style={themeStyles.text}>Select an Activity Type:</Text>
       <DropDownPicker
         open={open}
         value={activityType}
@@ -53,23 +56,28 @@ const AddActivity = ({ navigation }) => {
         setOpen={setOpen}
         setValue={setActivityType}
         placeholder="Select an Activity"
+        style={[commonStyles.dropdown, themeStyles.dropdown]}
+        textStyle={themeStyles.dropdownText}
+        arrowIconStyle={themeStyles.dropdownIcon}
+        tickIconStyle={themeStyles.dropdownIcon}
+        dropDownContainerStyle={themeStyles.dropdownOptions}
       />
 
-      <Text>Duration (min):</Text>
+      <Text style={themeStyles.text}>Duration (min):</Text>
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-        placeholder="Enter duration in minutes"
+        style={[commonStyles.input, themeStyles.input]}
+        // placeholder="Enter duration in minutes"
         value={duration}
         onChangeText={setDuration}
         keyboardType="numeric"
       />
 
-      <Text>Select Date:</Text>
+      <Text style={themeStyles.text}>Select Date:</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={() => navigation.goBack()} />
-    </View>
+    </Container>
   );
 };
 

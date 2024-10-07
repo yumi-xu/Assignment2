@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, Button } from "react-native";
 import ItemsList from "../Components/ItemsList";
 import { AppContext } from "../AppContext";
+import Container from "../Components/Container";
+import { Button } from "react-native";
 
 const displayActivityValue = (item) => item.duration;
 
 const Activities = ({ navigation }) => {
-  const { activities, theme } = useContext(AppContext);
+  const { activities } = useContext(AppContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -14,30 +15,16 @@ const Activities = ({ navigation }) => {
         <Button
           onPress={() => navigation.navigate("AddActivity")}
           title="Add"
-          color={theme === "light" ? "#000" : "#fff"}
         />
       ),
     });
-  }, [navigation, theme]);
+  }, [navigation]);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: theme === "light" ? "#E6E6FA" : "#333" },
-      ]}
-    >
+    <Container>
       <ItemsList items={activities} displayValue={displayActivityValue} />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E6E6FA",
-    padding: 10,
-  },
-});
 
 export default Activities;

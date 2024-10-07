@@ -1,13 +1,16 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { Text, TextInput, Button, Alert } from "react-native";
 import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
+import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
+import Container from "../Components/Container";
 
 const AddDietEntry = ({ navigation }) => {
-  const { addDiet } = useContext(AppContext);
+  const { addDiet, theme } = useContext(AppContext);
   const [description, setDescription] = useState("");
   const [calories, setCalories] = useState("");
   const [date, setDate] = useState(null);
+  const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
 
   const handleSave = () => {
     // Validate entries
@@ -38,30 +41,30 @@ const AddDietEntry = ({ navigation }) => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Description:</Text>
+    <Container>
+      <Text style={themeStyles.text}>Description:</Text>
       <TextInput
-        style={{ borderBottomWidth: 1, marginBottom: 10 }}
-        placeholder="Enter description"
+        style={[commonStyles.input, themeStyles.input]}
+        // placeholder="Enter description"
         value={description}
         onChangeText={setDescription}
       />
 
-      <Text>Calories:</Text>
+      <Text style={themeStyles.text}>Calories:</Text>
       <TextInput
-        style={{ borderBottomWidth: 1, marginBottom: 10 }}
-        placeholder="Enter calories"
+        style={[commonStyles.input, themeStyles.input]}
+        // placeholder="Enter calories"
         value={calories}
         onChangeText={setCalories}
         keyboardType="numeric"
       />
 
-      <Text>Select Date:</Text>
+      <Text style={themeStyles.text}>Select Date:</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={() => navigation.goBack()} />
-    </View>
+    </Container>
   );
 };
 
