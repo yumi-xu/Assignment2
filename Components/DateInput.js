@@ -7,9 +7,9 @@ import { AppContext } from "../AppContext";
 const DateInput = ({ date, onDateChange }) => {
   const { theme } = useContext(AppContext);
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
-
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  //After user press the textInput
   const handlePress = () => {
     if (!date) {
       onDateChange(new Date());
@@ -17,6 +17,7 @@ const DateInput = ({ date, onDateChange }) => {
     setShowDatePicker((show) => !show);
   };
 
+  //Once the Date is being changed
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     onDateChange(selectedDate || date);
