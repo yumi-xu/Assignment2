@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Text, TextInput, Button, Alert } from "react-native";
+import { Text, TextInput, Button, Alert, View } from "react-native";
 import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
 import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
@@ -62,8 +62,10 @@ const AddDietEntry = ({ navigation }) => {
       <Text style={themeStyles.text}>Select Date:</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
-      <Button title="Save" onPress={handleSave} />
-      <Button title="Cancel" onPress={() => navigation.goBack()} />
+      <View style={commonStyles.buttonsWrap}>
+        <Button title="Cancel" onPress={() => navigation.goBack()} />
+        <Button title="Save" onPress={handleSave} />
+      </View>
     </Container>
   );
 };

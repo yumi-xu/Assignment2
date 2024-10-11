@@ -34,6 +34,11 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
   },
+  buttonsWrap: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
+  },
 });
 
 export const commonLightStyles = StyleSheet.create({
