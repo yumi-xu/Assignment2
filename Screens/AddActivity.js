@@ -15,7 +15,13 @@ const AddActivity = ({ navigation }) => {
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
 
   const handleSave = () => {
-    if (!activityType || !duration || isNaN(duration)) {
+    // Validate entries
+    if (
+      !activityType ||
+      !duration ||
+      isNaN(duration) ||
+      parseInt(duration) < 0
+    ) {
       Alert.alert("Invalid Input", "Please enter valid activity details.");
       return;
     }
@@ -66,7 +72,6 @@ const AddActivity = ({ navigation }) => {
       <Text style={themeStyles.text}>Duration (min) *</Text>
       <TextInput
         style={[commonStyles.input, themeStyles.input]}
-        // placeholder="Enter duration in minutes"
         value={duration}
         onChangeText={setDuration}
         keyboardType="numeric"
