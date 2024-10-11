@@ -42,7 +42,7 @@ const AddDietEntry = ({ navigation }) => {
 
   return (
     <Container>
-      <Text style={themeStyles.text}>Description:</Text>
+      <Text style={themeStyles.text}>Description *</Text>
       <TextInput
         style={[commonStyles.input, themeStyles.input]}
         // placeholder="Enter description"
@@ -50,7 +50,7 @@ const AddDietEntry = ({ navigation }) => {
         onChangeText={setDescription}
       />
 
-      <Text style={themeStyles.text}>Calories:</Text>
+      <Text style={themeStyles.text}>Calories *</Text>
       <TextInput
         style={[commonStyles.input, themeStyles.input]}
         // placeholder="Enter calories"
@@ -59,7 +59,7 @@ const AddDietEntry = ({ navigation }) => {
         keyboardType="numeric"
       />
 
-      <Text style={themeStyles.text}>Select Date:</Text>
+      <Text style={themeStyles.text}>Date *</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <View style={commonStyles.buttonsWrap}>

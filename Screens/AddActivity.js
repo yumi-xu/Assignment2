@@ -40,7 +40,7 @@ const AddActivity = ({ navigation }) => {
 
   return (
     <Container>
-      <Text style={themeStyles.text}>Select an Activity Type:</Text>
+      <Text style={themeStyles.text}>Activity *</Text>
       <DropDownPicker
         open={open}
         value={activityType}
@@ -63,7 +63,7 @@ const AddActivity = ({ navigation }) => {
         dropDownContainerStyle={themeStyles.dropdownOptions}
       />
 
-      <Text style={themeStyles.text}>Duration (min):</Text>
+      <Text style={themeStyles.text}>Duration (min) *</Text>
       <TextInput
         style={[commonStyles.input, themeStyles.input]}
         // placeholder="Enter duration in minutes"
@@ -72,7 +72,7 @@ const AddActivity = ({ navigation }) => {
         keyboardType="numeric"
       />
 
-      <Text style={themeStyles.text}>Select Date:</Text>
+      <Text style={themeStyles.text}>Date *</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <View style={commonStyles.buttonsWrap}>
