@@ -46,7 +46,7 @@ const Diet = ({ navigation }) => {
   }, []);
 
   const onItemPress = (item) => {
-    navigation.navigate("EditDiet", { activity: item });
+    navigation.navigate("EditDiet", { diet: item });
   };
 
   return (

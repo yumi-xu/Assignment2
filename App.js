@@ -11,6 +11,7 @@ import EditActivity from "./Screens/EditActivity";
 import AddDietEntry from "./Screens/AddDietEntry";
 import { colors } from "./helper";
 import { Ionicons } from "@expo/vector-icons";
+import EditDiet from "./Screens/EditDiet";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -93,6 +94,11 @@ export default function App() {
             name="AddDietEntry"
             component={AddDietEntry}
             options={{ ...headerOptions, title: "Add" }}
+          />
+          <Stack.Screen
+            name="EditDiet"
+            component={EditDiet}
+            options={{ ...headerOptions, title: "Edit" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

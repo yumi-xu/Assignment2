@@ -1,14 +1,15 @@
 import React from "react";
 import { setToDB } from "../Firebase/firestoreHelper";
-import dietComponent from "../Components/DietComponent";
+import DietComponent from "../Components/DietComponent";
 
 const EditDiet = ({ route }) => {
+  console.log(route);
   const dietData = route.params.diet;
   const dietId = dietData.id;
   const handleSave = (newDiet) => {
     setToDB(dietId, "diets", newDiet);
   };
-  return <dietComponent dietData={dietData} onSave={handleSave} />;
+  return <DietComponent dietData={dietData} onSave={handleSave} />;
 };
 
 export default EditDiet;
