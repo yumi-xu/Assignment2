@@ -5,9 +5,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateInput from "../Components/DateInput";
 import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
 import Container from "../Components/Container";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
 const AddActivity = ({ navigation }) => {
-  const { addActivity, theme } = useContext(AppContext);
+  const { theme } = useContext(AppContext);
   const [activityType, setActivityType] = useState("");
   const [duration, setDuration] = useState("");
   const [date, setDate] = useState(null);
@@ -40,7 +41,7 @@ const AddActivity = ({ navigation }) => {
     };
 
     // Add to context and go back
-    addActivity(newActivity);
+    writeToDB(newActivity, "activities");
     navigation.goBack();
   };
 

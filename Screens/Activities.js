@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ItemsList from "../Components/ItemsList";
-import { AppContext } from "../AppContext";
 import Container from "../Components/Container";
 import { StyleSheet } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import PressableButton from "../Components/PressableButton";
+import { collection, onSnapshot } from "firebase/firestore";
+import { database } from "../Firebase/firebaseSetup";
 
 const displayActivityValue = (item) => item.duration;
 
 const Activities = ({ navigation }) => {
-  const { activities } = useContext(AppContext);
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,6 +27,23 @@ const Activities = ({ navigation }) => {
       ),
     });
   }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(database, "activities"),
+      (querySnapshot) => {
+        const newArray = [];
+        querySnapshot.forEach((docSnapshot) => {
+          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setActivities(newArray);
+      },
+    );
+    // Cleanup function to detach the listener
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <Container>
