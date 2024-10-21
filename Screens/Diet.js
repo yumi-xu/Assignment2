@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ItemsList from "../Components/ItemsList";
-import { AppContext } from "../AppContext";
 import Container from "../Components/Container";
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import PressableButton from "../Components/PressableButton";
+import { collection, onSnapshot } from "firebase/firestore";
+import { database } from "../Firebase/firebaseSetup";
 
 const displayDietValue = (item) => item.calories + " cal";
 
 const Diet = ({ navigation }) => {
-  const { diet } = useContext(AppContext);
+  const [diets, setDiets] = useState([]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,9 +28,26 @@ const Diet = ({ navigation }) => {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(database, "diets"),
+      (querySnapshot) => {
+        const newArray = [];
+        querySnapshot.forEach((docSnapshot) => {
+          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setDiets(newArray);
+      },
+    );
+    // Cleanup function to detach the listener
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <Container>
-      <ItemsList items={diet} displayValue={displayDietValue} />
+      <ItemsList items={diets} displayValue={displayDietValue} />
     </Container>
   );
 };

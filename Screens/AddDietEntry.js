@@ -4,9 +4,10 @@ import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
 import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
 import Container from "../Components/Container";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
 const AddDietEntry = ({ navigation }) => {
-  const { addDiet, theme } = useContext(AppContext);
+  const { theme } = useContext(AppContext);
   const [description, setDescription] = useState("");
   const [calories, setCalories] = useState("");
   const [date, setDate] = useState(null);
@@ -36,7 +37,7 @@ const AddDietEntry = ({ navigation }) => {
     };
 
     // Add to context and go back
-    addDiet(newDietEntry);
+    writeToDB(newDietEntry, "diets");
     navigation.goBack();
   };
 
