@@ -8,7 +8,7 @@ import PressableButton from "../Components/PressableButton";
 import { collection, onSnapshot } from "firebase/firestore";
 import { database } from "../Firebase/firebaseSetup";
 
-const displayActivityValue = (item) => item.duration;
+const displayActivityValue = (item) => `${item.duration} min`;
 
 const Activities = ({ navigation }) => {
   const [activities, setActivities] = useState([]);

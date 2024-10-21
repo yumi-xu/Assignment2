@@ -5,6 +5,7 @@ import {
   deleteDoc,
   getDocs,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -37,14 +38,12 @@ export async function deleteAllFromDB(collectionName) {
   }
 }
 
-// Function to add or update a warning field
-export async function addSpecialToActivity(goalId, collectionName) {
+export async function setToDB(id, collectionName, dataToSet) {
   try {
-    const docRef = doc(database, collectionName, goalId);
-    await updateDoc(docRef, {
-      special: true,
-    });
+    // const docRef = firestore.collection('yourCollection').doc('yourDocumentId');
+    const docRef = doc(database, collectionName, id);
+    await setDoc(docRef, dataToSet);
   } catch (err) {
-    console.log("Error updating document with special: ", err);
+    console.log("Error set document with data: ", err);
   }
 }

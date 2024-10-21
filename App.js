@@ -7,6 +7,7 @@ import Activities from "./Screens/Activities";
 import Diet from "./Screens/Diet";
 import Settings from "./Screens/Settings";
 import AddActivity from "./Screens/AddActivity";
+import EditActivity from "./Screens/EditActivity";
 import AddDietEntry from "./Screens/AddDietEntry";
 import { colors } from "./helper";
 import { Ionicons } from "@expo/vector-icons";
@@ -82,6 +83,11 @@ export default function App() {
             name="AddActivity"
             component={AddActivity}
             options={{ ...headerOptions, title: "Add" }}
+          />
+          <Stack.Screen
+            name="EditActivity"
+            component={EditActivity}
+            options={{ ...headerOptions, title: "Edit" }}
           />
           <Stack.Screen
             name="AddDietEntry"
