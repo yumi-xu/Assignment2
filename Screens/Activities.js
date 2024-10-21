@@ -2,7 +2,10 @@ import React, { useContext, useEffect } from "react";
 import ItemsList from "../Components/ItemsList";
 import { AppContext } from "../AppContext";
 import Container from "../Components/Container";
-import { Button } from "react-native";
+import { StyleSheet } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import PressableButton from "../Components/PressableButton";
 
 const displayActivityValue = (item) => item.duration;
 
@@ -12,10 +15,14 @@ const Activities = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
+        <PressableButton
+          componentStyle={styles.headerButton}
           onPress={() => navigation.navigate("AddActivity")}
-          title="Add"
-        />
+          pressedStyle={styles.pressableStyle}
+        >
+          <AntDesign name="plus" size={24} color="white" />
+          <MaterialIcons name="directions-run" size={24} color="white" />
+        </PressableButton>
       ),
     });
   }, [navigation]);
@@ -28,3 +35,14 @@ const Activities = ({ navigation }) => {
 };
 
 export default Activities;
+
+const styles = StyleSheet.create({
+  headerButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  pressableStyle: {
+    opacity: 0.5,
+    backgroundColor: "#E6E6FA",
+  },
+});
