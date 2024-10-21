@@ -7,7 +7,7 @@ import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 
-const Activity = ({ activityData, onSave }) => {
+const ActivityComponent = ({ activityData, onSave }) => {
   const { theme } = useContext(AppContext);
   const navigation = useNavigation();
   const [activityType, setActivityType] = useState(
@@ -96,4 +96,4 @@ const Activity = ({ activityData, onSave }) => {
   );
 };
 
-export default Activity;
+export default ActivityComponent;

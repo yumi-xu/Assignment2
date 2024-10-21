@@ -1,6 +1,6 @@
 import React from "react";
 import { setToDB } from "../Firebase/firestoreHelper";
-import Activity from "../Components/Activity";
+import ActivityComponent from "../Components/ActivityComponent";
 
 const EditActivity = ({ route }) => {
   const activityData = route.params.activity;
@@ -8,7 +8,7 @@ const EditActivity = ({ route }) => {
   const handleSave = (newActivity) => {
     setToDB(activityId, "activities", newActivity);
   };
-  return <Activity activityData={activityData} onSave={handleSave} />;
+  return <ActivityComponent activityData={activityData} onSave={handleSave} />;
 };
 
 export default EditActivity;

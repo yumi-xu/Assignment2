@@ -1,12 +1,13 @@
 import React from "react";
 import { writeToDB } from "../Firebase/firestoreHelper";
-import Activity from "../Components/Activity";
+import ActivityComponent from "../Components/ActivityComponent";
 
 const AddActivity = () => {
+  //save info to db
   const handleSave = (newActivity) => {
     writeToDB(newActivity, "activities");
   };
-  return <Activity onSave={handleSave} />;
+  return <ActivityComponent onSave={handleSave} />;
 };
 
 export default AddActivity;

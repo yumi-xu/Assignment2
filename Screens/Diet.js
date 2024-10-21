@@ -45,9 +45,17 @@ const Diet = ({ navigation }) => {
     };
   }, []);
 
+  const onItemPress = (item) => {
+    navigation.navigate("EditDiet", { activity: item });
+  };
+
   return (
     <Container>
-      <ItemsList items={diets} displayValue={displayDietValue} />
+      <ItemsList
+        items={diets}
+        displayValue={displayDietValue}
+        onItemPress={onItemPress}
+      />
     </Container>
   );
 };

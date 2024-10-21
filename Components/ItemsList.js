@@ -2,19 +2,17 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import { AppContext } from "../AppContext";
 import { colors } from "../helper";
-import { useNavigation } from "@react-navigation/native";
 
-const ItemsList = ({ items, displayValue }) => {
+const ItemsList = ({ items, displayValue, onItemPress }) => {
   const { theme } = useContext(AppContext);
   const themeStyles = theme === "light" ? lightStyles : darkStyles;
-  const navigation = useNavigation();
   return (
     <FlatList
       data={items}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => {
         const onPress = () => {
-          navigation.navigate("EditActivity", { activity: item });
+          onItemPress(item);
         };
         return (
           <Pressable onPress={onPress}>

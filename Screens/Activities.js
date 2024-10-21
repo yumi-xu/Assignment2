@@ -45,9 +45,17 @@ const Activities = ({ navigation }) => {
     };
   }, []);
 
+  const onItemPress = (item) => {
+    navigation.navigate("EditActivity", { activity: item });
+  };
+
   return (
     <Container>
-      <ItemsList items={activities} displayValue={displayActivityValue} />
+      <ItemsList
+        items={activities}
+        displayValue={displayActivityValue}
+        onItemPress={onItemPress}
+      />
     </Container>
   );
 };
