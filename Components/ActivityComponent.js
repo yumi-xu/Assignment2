@@ -1,9 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, TextInput, Alert, View, StyleSheet } from "react-native";
+import { Text, TextInput, Alert, View } from "react-native";
 import { AppContext } from "../AppContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateInput from "../Components/DateInput";
-import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
+import {
+  commonStyles,
+  commonLightStyles,
+  commonDarkStyles,
+  colors,
+} from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
@@ -36,7 +41,8 @@ const ActivityComponent = ({ activityData, onSave, onDelete }) => {
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
-          componentStyle={styles.headerButton}
+          componentStyle={commonStyles.headerButton}
+          pressedStyle={commonStyles.headerButtonPressed}
           onPress={async () => {
             if (
               !(await confirm(
@@ -49,9 +55,12 @@ const ActivityComponent = ({ activityData, onSave, onDelete }) => {
             onDelete(activityData);
             navigation.goBack();
           }}
-          pressedStyle={styles.pressableStyle}
         >
-          <FontAwesome name="trash" size={24} color="white" />
+          <FontAwesome
+            name="trash"
+            size={24}
+            color={colors.headerIconColorActive}
+          />
         </PressableButton>
       ),
     });
@@ -164,14 +173,3 @@ const ActivityComponent = ({ activityData, onSave, onDelete }) => {
 };
 
 export default ActivityComponent;
-
-const styles = StyleSheet.create({
-  headerButton: {
-    padding: 10,
-    marginRight: 10,
-  },
-  pressableStyle: {
-    opacity: 0.5,
-    backgroundColor: "#E6E6FA",
-  },
-});

@@ -1,8 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, TextInput, Alert, View, StyleSheet } from "react-native";
+import { Text, TextInput, Alert, View } from "react-native";
 import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
-import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
+import {
+  commonStyles,
+  commonLightStyles,
+  commonDarkStyles,
+  colors,
+} from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
@@ -34,7 +39,8 @@ const DietComponent = ({ dietData, onSave, onDelete }) => {
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
-          componentStyle={styles.headerButton}
+          componentStyle={commonStyles.headerButton}
+          pressedStyle={commonStyles.headerButtonPressed}
           onPress={async () => {
             if (
               !(await confirm(
@@ -47,9 +53,12 @@ const DietComponent = ({ dietData, onSave, onDelete }) => {
             onDelete(dietData);
             navigation.goBack();
           }}
-          pressedStyle={styles.pressableStyle}
         >
-          <FontAwesome name="trash" size={24} color="white" />
+          <FontAwesome
+            name="trash"
+            size={24}
+            color={colors.headerIconColorActive}
+          />
         </PressableButton>
       ),
     });
@@ -143,14 +152,3 @@ const DietComponent = ({ dietData, onSave, onDelete }) => {
 };
 
 export default DietComponent;
-
-const styles = StyleSheet.create({
-  headerButton: {
-    padding: 10,
-    marginRight: 10,
-  },
-  pressableStyle: {
-    opacity: 0.5,
-    backgroundColor: "#E6E6FA",
-  },
-});
