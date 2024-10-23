@@ -7,10 +7,14 @@ import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
+import SpecialCheckBox from "./SpecialCheckBox";
+import confirmSave from "../utils/confirmSave";
 
 const ActivityComponent = ({ activityData, onSave }) => {
   const { theme } = useContext(AppContext);
   const navigation = useNavigation();
+  const showCheckbox = !!activityData && activityData.special;
+  const [isChecked, setIsChecked] = useState(false);
   const [activityType, setActivityType] = useState(
     (activityData && activityData.type) || undefined,
   );
@@ -24,7 +28,7 @@ const ActivityComponent = ({ activityData, onSave }) => {
   const [open, setOpen] = useState(false);
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Validate entries
     if (
       !activityType ||
@@ -37,9 +41,16 @@ const ActivityComponent = ({ activityData, onSave }) => {
     }
 
     // Check for special conditions
-    const special =
-      (activityType === "Running" || activityType === "Weights") &&
-      parseInt(duration) > 60;
+    const special = (() => {
+      // This is the only case that allows user to override `special` to false
+      if (showCheckbox && isChecked) {
+        return false;
+      }
+      return (
+        (activityType === "Running" || activityType === "Weights") &&
+        parseInt(duration) > 60
+      );
+    })();
 
     // Create new activity
     const newActivity = {
@@ -48,6 +59,11 @@ const ActivityComponent = ({ activityData, onSave }) => {
       duration,
       special,
     };
+
+    // when editing an existing data, and user choose not to save, do nothing
+    if (activityData && !(await confirmSave())) {
+      return;
+    }
 
     onSave(newActivity);
     navigation.goBack();
@@ -89,6 +105,9 @@ const ActivityComponent = ({ activityData, onSave }) => {
       <Text style={themeStyles.text}>Date *</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
+      {showCheckbox && (
+        <SpecialCheckBox isChecked={isChecked} setIsChecked={setIsChecked} />
+      )}
       <View style={commonStyles.buttonsWrap}>
         <PressableButton
           onPress={() => navigation.goBack()}

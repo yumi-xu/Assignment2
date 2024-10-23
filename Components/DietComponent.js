@@ -6,10 +6,14 @@ import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
+import confirmSave from "../utils/confirmSave";
+import SpecialCheckBox from "./SpecialCheckBox";
 
 const DietComponent = ({ dietData, onSave }) => {
   const { theme } = useContext(AppContext);
   const navigation = useNavigation();
+  const showCheckbox = !!dietData && dietData.special;
+  const [isChecked, setIsChecked] = useState(false);
   const [description, setDescription] = useState(
     (dietData && dietData.type) || undefined,
   );
@@ -22,7 +26,7 @@ const DietComponent = ({ dietData, onSave }) => {
   });
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Validate entries
     if (
       !description ||
@@ -35,7 +39,13 @@ const DietComponent = ({ dietData, onSave }) => {
     }
 
     // Check for special conditions
-    const special = parseInt(calories) > 800;
+    const special = (() => {
+      // This is the only case that allows user to override `special` to false
+      if (showCheckbox && isChecked) {
+        return false;
+      }
+      return parseInt(calories) > 800;
+    })();
 
     // Create new diet entry
     const newDietEntry = {
@@ -44,6 +54,11 @@ const DietComponent = ({ dietData, onSave }) => {
       calories,
       special,
     };
+
+    // when editing an existing data, and user choose not to save, do nothing
+    if (dietData && !(await confirmSave())) {
+      return;
+    }
 
     onSave(newDietEntry);
     navigation.goBack();
@@ -69,6 +84,9 @@ const DietComponent = ({ dietData, onSave }) => {
       <Text style={themeStyles.text}>Date *</Text>
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
+      {showCheckbox && (
+        <SpecialCheckBox isChecked={isChecked} setIsChecked={setIsChecked} />
+      )}
       <View style={commonStyles.buttonsWrap}>
         <PressableButton
           onPress={() => navigation.goBack()}
