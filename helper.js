@@ -39,6 +39,28 @@ export const commonStyles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
   },
+
+  buttonText: {
+    textAlign: "center",
+    width: 150,
+    color: "#ffffff",
+    fontSize: 20,
+    paddingVertical: 4,
+  },
+
+  primaryButton: {
+    backgroundColor: "#363678",
+  },
+  primaryButtonPressed: {
+    opacity: 0.5,
+  },
+
+  secondaryButton: {
+    backgroundColor: "#9b085b",
+  },
+  secondaryButtonPressed: {
+    opacity: 0.5,
+  },
 });
 
 export const commonLightStyles = StyleSheet.create({

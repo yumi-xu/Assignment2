@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Text, TextInput, Button, Alert, View } from "react-native";
+import { Text, TextInput, Alert, View } from "react-native";
 import { AppContext } from "../AppContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateInput from "../Components/DateInput";
 import { commonStyles, commonLightStyles, commonDarkStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
+import PressableButton from "./PressableButton";
 
 const ActivityComponent = ({ activityData, onSave }) => {
   const { theme } = useContext(AppContext);
@@ -36,7 +37,7 @@ const ActivityComponent = ({ activityData, onSave }) => {
     }
 
     // Check for special conditions
-    const warning =
+    const special =
       (activityType === "Running" || activityType === "Weights") &&
       parseInt(duration) > 60;
 
@@ -45,7 +46,7 @@ const ActivityComponent = ({ activityData, onSave }) => {
       type: activityType,
       date: date.toDateString(),
       duration,
-      warning,
+      special,
     };
 
     onSave(newActivity);
@@ -89,8 +90,20 @@ const ActivityComponent = ({ activityData, onSave }) => {
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <View style={commonStyles.buttonsWrap}>
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
-        <Button title="Save" onPress={handleSave} />
+        <PressableButton
+          onPress={() => navigation.goBack()}
+          componentStyle={commonStyles.secondaryButton}
+          pressedStyle={commonStyles.secondaryButtonPressed}
+        >
+          <Text style={commonStyles.buttonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton
+          onPress={handleSave}
+          componentStyle={commonStyles.primaryButton}
+          pressedStyle={commonStyles.primaryButtonPressed}
+        >
+          <Text style={commonStyles.buttonText}>Save</Text>
+        </PressableButton>
       </View>
     </Container>
   );

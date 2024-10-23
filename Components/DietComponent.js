@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Text, TextInput, Button, Alert, View } from "react-native";
+import { Text, TextInput, Alert, View } from "react-native";
 import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
 import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
+import PressableButton from "./PressableButton";
 
 const DietComponent = ({ dietData, onSave }) => {
   const { theme } = useContext(AppContext);
@@ -34,14 +35,14 @@ const DietComponent = ({ dietData, onSave }) => {
     }
 
     // Check for special conditions
-    const warning = parseInt(calories) > 800;
+    const special = parseInt(calories) > 800;
 
     // Create new diet entry
     const newDietEntry = {
       type: description,
       date: date.toDateString(),
       calories,
-      warning,
+      special,
     };
 
     onSave(newDietEntry);
@@ -69,8 +70,20 @@ const DietComponent = ({ dietData, onSave }) => {
       <DateInput date={date} onDateChange={(date) => setDate(date)} />
 
       <View style={commonStyles.buttonsWrap}>
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
-        <Button title="Save" onPress={handleSave} />
+        <PressableButton
+          onPress={() => navigation.goBack()}
+          componentStyle={commonStyles.secondaryButton}
+          pressedStyle={commonStyles.secondaryButtonPressed}
+        >
+          <Text style={commonStyles.buttonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton
+          onPress={handleSave}
+          componentStyle={commonStyles.primaryButton}
+          pressedStyle={commonStyles.primaryButtonPressed}
+        >
+          <Text style={commonStyles.buttonText}>Save</Text>
+        </PressableButton>
       </View>
     </Container>
   );

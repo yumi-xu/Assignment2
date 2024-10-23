@@ -20,7 +20,7 @@ const ItemsList = ({ items, displayValue, onItemPress }) => {
               <Text style={[styles.title, themeStyles.textColor]}>
                 {item.type}
               </Text>
-              {item.warning && <Text style={styles.warning}>⚠️</Text>}
+              {item.special && <Text style={styles.special}>⚠️</Text>}
               <Text style={themeStyles.textColor}>{item.date}</Text>
               <Text style={themeStyles.textColor}>{displayValue(item)}</Text>
             </View>
