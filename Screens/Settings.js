@@ -6,7 +6,7 @@ import { commonStyles } from "../helper";
 import PressableButton from "../Components/PressableButton";
 
 const Settings = () => {
-  const { toggleTheme, theme } = useContext(AppContext);
+  const { toggleTheme } = useContext(AppContext);
   return (
     <Container>
       <View style={styles.container}>
