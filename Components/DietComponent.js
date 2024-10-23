@@ -1,15 +1,16 @@
-import React, { useState, useContext } from "react";
-import { Text, TextInput, Alert, View } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { Text, TextInput, Alert, View, StyleSheet } from "react-native";
 import { AppContext } from "../AppContext";
 import DateInput from "../Components/DateInput";
 import { commonDarkStyles, commonLightStyles, commonStyles } from "../helper";
 import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
-import confirmSave from "../utils/confirmSave";
 import SpecialCheckBox from "./SpecialCheckBox";
+import confirm from "../utils/confirm";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const DietComponent = ({ dietData, onSave }) => {
+const DietComponent = ({ dietData, onSave, onDelete }) => {
   const { theme } = useContext(AppContext);
   const navigation = useNavigation();
   const showCheckbox = !!dietData && dietData.special;
@@ -25,6 +26,34 @@ const DietComponent = ({ dietData, onSave }) => {
     return date ? new Date(date) : null;
   });
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
+
+  useEffect(() => {
+    if (!dietData) {
+      return;
+    }
+    navigation.setOptions({
+      headerRight: () => (
+        <PressableButton
+          componentStyle={styles.headerButton}
+          onPress={async () => {
+            if (
+              !(await confirm(
+                "Delete",
+                "Are you sure you want to delete this item?",
+              ))
+            ) {
+              return;
+            }
+            onDelete(dietData);
+            navigation.goBack();
+          }}
+          pressedStyle={styles.pressableStyle}
+        >
+          <FontAwesome name="trash" size={24} color="white" />
+        </PressableButton>
+      ),
+    });
+  }, [dietData, navigation]);
 
   const handleSave = async () => {
     // Validate entries
@@ -56,7 +85,13 @@ const DietComponent = ({ dietData, onSave }) => {
     };
 
     // when editing an existing data, and user choose not to save, do nothing
-    if (dietData && !(await confirmSave())) {
+    if (
+      dietData &&
+      !(await confirm(
+        "Important",
+        "Are you sure you want to save these changes?",
+      ))
+    ) {
       return;
     }
 
@@ -108,3 +143,14 @@ const DietComponent = ({ dietData, onSave }) => {
 };
 
 export default DietComponent;
+
+const styles = StyleSheet.create({
+  headerButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  pressableStyle: {
+    opacity: 0.5,
+    backgroundColor: "#E6E6FA",
+  },
+});

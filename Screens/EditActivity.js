@@ -1,5 +1,5 @@
 import React from "react";
-import { setToDB } from "../Firebase/firestoreHelper";
+import { deleteFromDB, setToDB } from "../Firebase/firestoreHelper";
 import ActivityComponent from "../Components/ActivityComponent";
 
 const EditActivity = ({ route }) => {
@@ -8,7 +8,16 @@ const EditActivity = ({ route }) => {
   const handleSave = (newActivity) => {
     setToDB(activityId, "activities", newActivity);
   };
-  return <ActivityComponent activityData={activityData} onSave={handleSave} />;
+  const handleDelete = ({ id }) => {
+    deleteFromDB(id, "activities");
+  };
+  return (
+    <ActivityComponent
+      activityData={activityData}
+      onSave={handleSave}
+      onDelete={handleDelete}
+    />
+  );
 };
 
 export default EditActivity;

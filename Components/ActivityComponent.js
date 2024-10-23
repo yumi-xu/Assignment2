@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Text, TextInput, Alert, View } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { Text, TextInput, Alert, View, StyleSheet } from "react-native";
 import { AppContext } from "../AppContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateInput from "../Components/DateInput";
@@ -8,9 +8,10 @@ import Container from "../Components/Container";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import SpecialCheckBox from "./SpecialCheckBox";
-import confirmSave from "../utils/confirmSave";
+import confirm from "../utils/confirm";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const ActivityComponent = ({ activityData, onSave }) => {
+const ActivityComponent = ({ activityData, onSave, onDelete }) => {
   const { theme } = useContext(AppContext);
   const navigation = useNavigation();
   const showCheckbox = !!activityData && activityData.special;
@@ -27,6 +28,34 @@ const ActivityComponent = ({ activityData, onSave }) => {
   });
   const [open, setOpen] = useState(false);
   const themeStyles = theme === "light" ? commonLightStyles : commonDarkStyles;
+
+  useEffect(() => {
+    if (!activityData) {
+      return;
+    }
+    navigation.setOptions({
+      headerRight: () => (
+        <PressableButton
+          componentStyle={styles.headerButton}
+          onPress={async () => {
+            if (
+              !(await confirm(
+                "Delete",
+                "Are you sure you want to delete this item?",
+              ))
+            ) {
+              return;
+            }
+            onDelete(activityData);
+            navigation.goBack();
+          }}
+          pressedStyle={styles.pressableStyle}
+        >
+          <FontAwesome name="trash" size={24} color="white" />
+        </PressableButton>
+      ),
+    });
+  }, [activityData, navigation]);
 
   const handleSave = async () => {
     // Validate entries
@@ -61,7 +90,13 @@ const ActivityComponent = ({ activityData, onSave }) => {
     };
 
     // when editing an existing data, and user choose not to save, do nothing
-    if (activityData && !(await confirmSave())) {
+    if (
+      activityData &&
+      !(await confirm(
+        "Important",
+        "Are you sure you want to save these changes?",
+      ))
+    ) {
       return;
     }
 
@@ -129,3 +164,14 @@ const ActivityComponent = ({ activityData, onSave }) => {
 };
 
 export default ActivityComponent;
+
+const styles = StyleSheet.create({
+  headerButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  pressableStyle: {
+    opacity: 0.5,
+    backgroundColor: "#E6E6FA",
+  },
+});

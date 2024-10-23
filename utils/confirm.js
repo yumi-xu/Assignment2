@@ -1,10 +1,10 @@
 import { Alert } from "react-native";
 
-const confirmSave = () => {
+const confirm = (title, message) => {
   return new Promise((resolve) => {
     Alert.alert(
-      "Important", // Title
-      "Are you sure you want to save these changes?", // Message
+      title,
+      message,
       [
         {
           text: "No",
@@ -21,4 +21,4 @@ const confirmSave = () => {
   });
 };
 
-export default confirmSave;
+export default confirm;
