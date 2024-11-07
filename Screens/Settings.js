@@ -1,14 +1,22 @@
 import React, { useContext } from "react";
 import { AppContext } from "../AppContext";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Container from "../Components/Container";
+import { commonStyles } from "../helper";
+import PressableButton from "../Components/PressableButton";
 
 const Settings = () => {
-  const { toggleTheme, theme } = useContext(AppContext);
+  const { toggleTheme } = useContext(AppContext);
   return (
     <Container>
       <View style={styles.container}>
-        <Button title="Toggle Theme" onPress={toggleTheme} />
+        <PressableButton
+          onPress={toggleTheme}
+          componentStyle={commonStyles.primaryButton}
+          pressedStyle={commonStyles.primaryButtonPressed}
+        >
+          <Text style={commonStyles.buttonText}>Toggle Theme</Text>
+        </PressableButton>
       </View>
     </Container>
   );

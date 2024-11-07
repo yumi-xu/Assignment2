@@ -1,23 +1,32 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import { AppContext } from "../AppContext";
 import { colors } from "../helper";
 
-const ItemsList = ({ items, displayValue }) => {
+const ItemsList = ({ items, displayValue, onItemPress }) => {
   const { theme } = useContext(AppContext);
   const themeStyles = theme === "light" ? lightStyles : darkStyles;
   return (
     <FlatList
       data={items}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <View style={[styles.itemContainer, themeStyles.itemBg]}>
-          <Text style={[styles.title, themeStyles.textColor]}>{item.type}</Text>
-          {item.warning && <Text style={styles.warning}>⚠️</Text>}
-          <Text style={themeStyles.textColor}>{item.date}</Text>
-          <Text style={themeStyles.textColor}>{displayValue(item)}</Text>
-        </View>
-      )}
+      renderItem={({ item }) => {
+        const onPress = () => {
+          onItemPress(item);
+        };
+        return (
+          <Pressable onPress={onPress}>
+            <View style={[styles.itemContainer, themeStyles.itemBg]}>
+              <Text style={[styles.title, themeStyles.textColor]}>
+                {item.type}
+              </Text>
+              {item.special && <Text style={styles.special}>⚠️</Text>}
+              <Text style={themeStyles.textColor}>{item.date}</Text>
+              <Text style={themeStyles.textColor}>{displayValue(item)}</Text>
+            </View>
+          </Pressable>
+        );
+      }}
     />
   );
 };

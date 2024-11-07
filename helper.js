@@ -20,6 +20,10 @@ export const colors = {
   inputBorderDarkColor: "#ffffff",
   inputBackgroundLightColor: "#ffffff",
   inputBackgroundDarkColor: "#3e3a80",
+  headerButtonPressedBackgroundColor: "#605d92",
+  headerButtonColor: "#ffffff",
+  primaryButtonBackgroundColor: "#363678",
+  secondaryButtonBackgroundColor: "#9b085b",
 };
 
 export const commonStyles = StyleSheet.create({
@@ -38,6 +42,37 @@ export const commonStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     gap: 10,
+  },
+
+  headerButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  headerButtonPressed: {
+    opacity: 0.5,
+    backgroundColor: colors.headerButtonPressedBackgroundColor,
+  },
+
+  buttonText: {
+    textAlign: "center",
+    width: 150,
+    color: colors.headerButtonColor,
+    fontSize: 20,
+    paddingVertical: 4,
+  },
+
+  primaryButton: {
+    backgroundColor: colors.primaryButtonBackgroundColor,
+  },
+  primaryButtonPressed: {
+    opacity: 0.5,
+  },
+
+  secondaryButton: {
+    backgroundColor: colors.secondaryButtonBackgroundColor,
+  },
+  secondaryButtonPressed: {
+    opacity: 0.5,
   },
 });
 
